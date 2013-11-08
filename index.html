@@ -40,7 +40,7 @@ force.on("tick", function(e) {
 
   while (++i < n) q.visit(collide(nodes[i]));
 
-  svg.selectAll("circle")
+  svg.selectAll("rect")
       .attr("x", function(d) { return d.x; })
       .attr("y", function(d) { return d.y; });
 });
