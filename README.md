@@ -1,1 +1,3 @@
-Mouseover to repel nodes. Adapted from my [talk on force layouts](http://vimeo.com/29458354). Compare to the [canvas version](/mbostock/3231307).
+Adaptation of Mike Bostock's [Collision Detection](http://bl.ocks.org/mbostock/3231298) with rectangular elements.
+
+Got most of the way there myself but needed [this example](http://bl.ocks.org/ilyabo/2585241) by Ilya Boyandin to clean it up.
