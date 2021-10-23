@@ -6,12 +6,12 @@
 
   // Adapted from Shan Carter's https://observablehq.com/@observablehq/simple-d3
   
-var width = 960,
-    height = 500;
+const width = 960,
+      height = 500;
 
-var svg = d3.select("body").append("svg")
-    .attr("width", width)
-    .attr("height", height);
+const svg = d3.select("body").append("svg")
+        .attr("width", width)
+        .attr("height", height);
 
 
 svg
@@ -21,7 +21,6 @@ svg
       .attr("cx", d => d * 10)
       .attr("cy", d => Math.random()*height + 100)
       .attr("r", d => Math.random() * 20)
-      .attr("fill", "hsl(216deg 100% 13%)")
-  
+      .attr("fill", d3.scaleOrdinal(d3.schemeTableau10))
 
 </script>
