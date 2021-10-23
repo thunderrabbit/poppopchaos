@@ -9,6 +9,8 @@
 const width = 960,
       height = 500;
 
+const nodes = d3.range(200);
+
 const svg = d3.select("body").append("svg")
         .attr("width", width)
         .attr("height", height);
@@ -16,7 +18,7 @@ const svg = d3.select("body").append("svg")
 
 svg
     .selectAll("circle")
-    .data(d3.range(200))
+    .data(nodes)
     .join("circle")
       .attr("cx", d => d * 10)
       .attr("cy", d => Math.random()*height + 100)
