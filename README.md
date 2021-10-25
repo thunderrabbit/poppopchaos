@@ -14,8 +14,6 @@ The idea is to have Slim Framework handle api calls and return data for my D3
 
 Next steps?:
 
-* enable debug mode in Slim Framework
-
 * Create endpoints like api/v1/click_bubble (to respond to clicking a bubble)
 ** Get D3 to hit api/ via click_bubble if a bubble is clicked
 ** Have Slim return +1 to inflate the bubble
