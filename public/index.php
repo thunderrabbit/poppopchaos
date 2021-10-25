@@ -15,6 +15,11 @@ $app->get('/', function (Request $request, Response $response, $args) {
     return $response;
 });
 
+$app->get('/click_bubble', function (Request $request, Response $response, $args) {
+    $version = $args['version'];
+    $response->getBody()->write("Bubble Clicked! version " . $version);
+    return $response;
+});
 
 /**
  * https://www.slimframework.com/docs/v4/start/upgrade.html#new-error-handling-middleware
