@@ -24,6 +24,7 @@ const mouseClickedBackground = function(click_info) {
   console.log("not circle");
   console.log(click_info);
   svg.append("circle")
+  .attr("id", d => 66)   // not working.  I want / need id to identify individual circles
     .attr("cx", d => click_info.clientX)
     .attr("cy", d => click_info.clientY)
     .attr("r", d => screen.width / 100)
