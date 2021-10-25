@@ -9,23 +9,32 @@
 const width = screen.width,
       height = screen.height;
 
-const nodes = d3.range(200);
+const nodes = d3.range(3);
 
 const svg = d3.select("body").append("svg")
         .attr("width", width)
         .attr("height", height);
 
-const mouseClickedCircle = function(click_info) {
-  console.log("circle");
+const mouseClickedCircle = function(click_info,circle_id) {
+  console.log("circle_id");
+  console.log(circle_id);
   console.log(click_info);
 }
 const mouseClickedBackground = function(click_info) {
   console.log("not circle");
   console.log(click_info);
+  svg.append("circle")
+    .attr("cx", d => click_info.clientX)
+    .attr("cy", d => click_info.clientY)
+    .attr("r", d => screen.width / 100)
+    .attr("fill", d3.scaleOrdinal(d3.schemeTableau10))
+    .on("click",mouseClickedCircle);
+
 }
 const mouseClickedSVG = function(click_info) {
   if(click_info.target.matches("circle")) {
-    return mouseClickedCircle(click_info);   // not sure why I am returning this but kinda think that is how JS likes to be
+    console.log("ignoring click info");
+//    return mouseClickedCircle(click_info);   // not sure why I am returning this but kinda think that is how JS likes to be
   }
   if(click_info.target.matches("svg")) {
     return mouseClickedBackground(click_info); // not sure why I am returning this but kinda think that is how JS likes to be
@@ -44,6 +53,7 @@ svg
       .on("mouseover",function(){
         d3.select(this).attr("r", d => Math.random() * screen.width / 20 + 20)
       })
+      .on("click",mouseClickedCircle);
 
 
 svg.on("click",mouseClickedSVG);
