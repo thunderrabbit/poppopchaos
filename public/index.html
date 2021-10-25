@@ -15,6 +15,23 @@ const svg = d3.select("body").append("svg")
         .attr("width", width)
         .attr("height", height);
 
+const mouseClickedCircle = function(click_info) {
+  console.log("circle");
+  console.log(click_info);
+}
+const mouseClickedBackground = function(click_info) {
+  console.log("not circle");
+  console.log(click_info);
+}
+const mouseClickedSVG = function(click_info) {
+  if(click_info.target.matches("circle")) {
+    return mouseClickedCircle(click_info);   // not sure why I am returning this but kinda think that is how JS likes to be
+  }
+  if(click_info.target.matches("svg")) {
+    return mouseClickedBackground(click_info); // not sure why I am returning this but kinda think that is how JS likes to be
+  }
+  // because of the returns we don't get down here
+}
 
 svg
     .selectAll("circle")
@@ -27,8 +44,8 @@ svg
       .on("mouseover",function(){
         d3.select(this).attr("r", d => Math.random() * screen.width / 20 + 20)
       })
-      .each(function(d,i) {
-        console.log(this);
-      });
+
+
+svg.on("click",mouseClickedSVG);
 
 </script>
