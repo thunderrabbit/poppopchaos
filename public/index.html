@@ -9,7 +9,16 @@
 const width = screen.width,
       height = screen.height;
 
-const nodes = d3.range(3);
+function getData() {
+  let data = [];
+  let numItems = Math.ceil(Math.random() * 50);
+
+  for(let i=0; i<numItems; i++) {
+    data.push(40);
+  }
+
+  return data;
+}
 
 const svg = d3.select("body").append("svg")
         .attr("width", width)
@@ -23,6 +32,8 @@ const mouseClickedCircle = function(click_info,circle_id) {
 const mouseClickedBackground = function(click_info) {
   console.log("not circle");
   console.log(click_info);
+  updateAll();
+/*
   svg.append("circle")
     .datum({id: 66})   // trying to add to nodes.. via https://octoperf.com/blog/2018/04/17/d3-js-mouse-events-and-transitions-tutorial/#how-to-bind-data-using-d3datum
   .attr("id", d => 66)   // not working.  I want / need id to identify individual circles
@@ -31,6 +42,7 @@ const mouseClickedBackground = function(click_info) {
     .attr("r", d => screen.width / 100)
     .attr("fill", d3.scaleOrdinal(d3.schemeTableau10))
     .on("click",mouseClickedCircle);
+*/
 
 }
 const mouseClickedSVG = function(click_info) {
@@ -46,11 +58,12 @@ const mouseClickedSVG = function(click_info) {
 }
 
 const circleEnter = function(enter) {
+  console.log("entering");
   return enter    // https://www.createwithdata.com/enter-exit-with-d3-join/
   .append("circle")
   .attr("cx", d => Math.random()*width)
   .attr("cy", d => Math.random()*height)
-  .attr("r", d => 188)    // will be inflated in 3000 milliseconds down below
+  .attr("r", d => 1)    // will be inflated in 3000 milliseconds down below
   .attr("fill", d3.scaleOrdinal(d3.schemeTableau10))
   .on("mouseover",function(){
     d3.select(this).attr("r", d => Math.random() * screen.width / 20 + 20)
@@ -65,10 +78,7 @@ const circleEnter = function(enter) {
 
 const circleUpdate = function(update) {
   return update    // https://www.createwithdata.com/enter-exit-with-d3-join/
-  .on("mouseover",function(){
-    d3.select(this).attr("r", d => Math.random() * screen.width / 20 + 20)
-  })
-
+  .style("opacity", 0.5)
 }
 
 const circleExit = function(exit) {
@@ -82,17 +92,18 @@ const circleExit = function(exit) {
     });
 }
 
+function updateAll() {
+  let nodes = getData();
+  console.log(nodes);
 svg
     .selectAll("circle")
     .data(nodes)
     .join(circleEnter,circleUpdate,circleExit)    // https://www.createwithdata.com/enter-exit-with-d3-join/
-    .attr('cx', function(d, i) {
-      return i * 565;
-    })
     .transition()
-    .duration(3000)  // milliseconds
+    .duration(1330)  // milliseconds
     .attr('r', d => screen.width / 100)
     .style('opacity', 1);
+}
 
 svg.on("click",mouseClickedSVG);
 
