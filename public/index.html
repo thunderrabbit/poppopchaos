@@ -104,7 +104,9 @@ function updateAll() {
   console.log(nodes);
 svg
     .selectAll("circle")
-    .data(nodes)
+    .data(nodes, function(d) {   // this keyFunction ensures bubbles stay consistent
+      return d.bubble_id;    // id should come from MySQL DB bubbles.bubble_id
+    })
     .join(circleEnter,circleUpdate,circleExit)    // https://www.createwithdata.com/enter-exit-with-d3-join/
     .transition()
     .duration(1330)  // milliseconds
