@@ -24,6 +24,7 @@ const mouseClickedBackground = function(click_info) {
   console.log("not circle");
   console.log(click_info);
   svg.append("circle")
+    .datum({id: 66})   // trying to add to nodes.. via https://octoperf.com/blog/2018/04/17/d3-js-mouse-events-and-transitions-tutorial/#how-to-bind-data-using-d3datum
   .attr("id", d => 66)   // not working.  I want / need id to identify individual circles
     .attr("cx", d => click_info.clientX)
     .attr("cy", d => click_info.clientY)
