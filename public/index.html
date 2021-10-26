@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
 <body>
-<script src="//d3js.org/d3.v6.min.js"></script>
+<script src="//d3js.org/d3.v6.js"></script>
 <script>
 
   // Adapted from Shan Carter's https://observablehq.com/@observablehq/simple-d3
@@ -34,8 +34,9 @@ const mouseClickedBackground = function(click_info) {
 
 }
 const mouseClickedSVG = function(click_info) {
+  console.log(click_info);
   if(click_info.target.matches("circle")) {
-    console.log("ignoring click info");
+    console.log("ignoring click info because circles catch their own clicks");
 //    return mouseClickedCircle(click_info);   // not sure why I am returning this but kinda think that is how JS likes to be
   }
   if(click_info.target.matches("svg")) {
@@ -49,16 +50,25 @@ const circleEnter = function(enter) {
   .append("circle")
   .attr("cx", d => Math.random()*width)
   .attr("cy", d => Math.random()*height)
-  .attr("r", d => 1)    // will be inflated in 3000 milliseconds down below
+  .attr("r", d => 188)    // will be inflated in 3000 milliseconds down below
   .attr("fill", d3.scaleOrdinal(d3.schemeTableau10))
   .on("mouseover",function(){
     d3.select(this).attr("r", d => Math.random() * screen.width / 20 + 20)
   })
   .on("click",mouseClickedCircle)
+  // These cause a merge error in the .data(nodes).join(circleEnter,circleUpdate,circleExit)
+  // .transition()
+  // .duration(3000)  // milliseconds
+  // .attr('r', d => screen.width / 100)
+  // .style('opacity', 1)
 }
 
 const circleUpdate = function(update) {
-  return update;    // https://www.createwithdata.com/enter-exit-with-d3-join/
+  return update    // https://www.createwithdata.com/enter-exit-with-d3-join/
+  .on("mouseover",function(){
+    d3.select(this).attr("r", d => Math.random() * screen.width / 20 + 20)
+  })
+
 }
 
 const circleExit = function(exit) {
