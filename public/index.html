@@ -31,10 +31,12 @@ const svg = d3.select("body").append("svg")
         .attr("width", width)
         .attr("height", height);
 
-const mouseClickedCircle = function(click_info,circle_id) {
+const mouseClickedCircle = function(click_info,bubble_object) {
   console.log("circle_id");
-  console.log(circle_id);
-  console.log(click_info);
+  console.log(bubble_object.bubble_id);
+  // call bubble_click API with bubble_id
+  // on response, update radius of bubble
+  // updateAll()
 }
 const mouseClickedBackground = function(click_info) {
   console.log("not circle");
