@@ -89,6 +89,11 @@ const circleEnter = function(enter) {
 
 const circleUpdate = function(update) {
   return update    // https://www.createwithdata.com/enter-exit-with-d3-join/
+  .attr('r', function(d) {
+    // todo update actual data so radius stays changed
+    d.radius = d.radius+5;
+    return d.radius;
+  })
   .style("opacity", 0.5)
 }
 
