@@ -10,20 +10,22 @@ const width = screen.width,
       height = screen.height;
 
 function getData() {
-  let data = [];
   let numItems = Math.ceil(Math.random() * 50);
 
-  for(let i=0; i<numItems; i++) {
-    data.push({
-      "bubble_id": i * 7 + 13, //  Simulate some random ids from DB
-      "cx": Math.random()*width,
-      "cy": Math.random()*height,
-      "r" : (screen.width / 120),
-      "fill": d3.scaleOrdinal(d3.schemeTableau10),
-      "tx": "texas",   // this proves we got data from this getData function
-    });
-  }
-
+  // https://www.d3indepth.com/force-layout/
+  let data = d3
+      .range(numItems)
+      .map(function(d, i) {
+        return {
+          "bubble_id": i * 7 + 13, //  Simulate some random ids from DB
+          "cx": Math.random()*width,
+          "cy": Math.random()*height,
+          "r" : (screen.width / 120),
+          "fill": d3.scaleOrdinal(d3.schemeTableau10),
+          "category": i % 3,
+          "tx": "texas",   // this proves we got data from this getData function
+        }
+      })
   return data;
 }
 
