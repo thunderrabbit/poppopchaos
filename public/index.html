@@ -89,12 +89,10 @@ const circleEnter = function(enter) {
 
 const circleUpdate = function(update) {
   return update    // https://www.createwithdata.com/enter-exit-with-d3-join/
-  .attr('r', function(d) {
-    // todo update actual data so radius stays changed
-    d.radius = d.radius+5;
-    return d.radius;
+  .each(function(d,i) {
+    // todo update actual data
+    d.radius = d.radius + Math.random() * 50;
   })
-  .style("opacity", 0.5)
 }
 
 const circleExit = function(exit) {
@@ -117,6 +115,11 @@ svg
       return d.bubble_id;    // id should come from MySQL DB bubbles.bubble_id
     })
     .join(circleEnter,circleUpdate,circleExit)    // https://www.createwithdata.com/enter-exit-with-d3-join/
+    .transition() ///  this transition is basically for circleUpdate changes
+    .duration(8490)
+    .attr('r', function(d) {
+      return d.radius;
+    })
 }
 
 svg.on("click",mouseClickedSVG);
