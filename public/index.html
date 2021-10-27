@@ -112,10 +112,6 @@ svg
       return d.bubble_id;    // id should come from MySQL DB bubbles.bubble_id
     })
     .join(circleEnter,circleUpdate,circleExit)    // https://www.createwithdata.com/enter-exit-with-d3-join/
-    .transition()
-    .duration(1330)  // milliseconds
-    .attr('r', d => screen.width / 100)
-    .style('opacity', 1);
 }
 
 svg.on("click",mouseClickedSVG);
