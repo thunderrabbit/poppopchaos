@@ -20,7 +20,7 @@ function getData() {
           "bubble_id": i * 7 + 13, //  Simulate some random ids from DB
           "cx": Math.random()*width,
           "cy": Math.random()*height,
-          "r" : (screen.width / 120),
+          "radius" : (screen.width / 120),
           "fill": d3.scaleOrdinal(d3.schemeTableau10),
           "category": i % 3,
           "tx": "texas",   // this proves we got data from this getData function
@@ -75,7 +75,7 @@ const circleEnter = function(enter) {
   .attr("cx", d => d.cx)
   .attr("cy", d => d.cy)
   .attr("fill", d => d.fill)
-  .attr("r", d => d.r)    // will be inflated in 3000 milliseconds down below
+  .attr("r", d => d.radius)    // will be inflated in 3000 milliseconds down below
   .on("mouseover",function(){
     d3.select(this).attr("r", d => Math.random() * screen.width / 20 + 20)
   })
