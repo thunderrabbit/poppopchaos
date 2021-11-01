@@ -2,7 +2,7 @@
 
 ## Pop Pop Chaos
 
-Sentimental Version: Pre Alpha Proof of Htaccess Concept with locally inflating bubbles
+Sentimental Version: Proof of Concept with locally and server-inflating bubbles
 
 Okay basically I tried to pop Slimframework onto this and get:
 
@@ -14,9 +14,6 @@ bcn.robnugen.com             = My attempt at Pop Pop Chaos if I visit
 The idea is to have Slim Framework handle api calls and return data for my D3
 
 Next steps?:
-
-* Get D3 to hit api/v1/click_bubble via click_bubble if a bubble is clicked
-* Have Slim return +1 to inflate the bubble
 
 * Have Slim access database
 ** smurf some data per click
