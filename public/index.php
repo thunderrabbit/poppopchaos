@@ -27,7 +27,20 @@ $app->post('/click_bubble', function (Request $request, Response $response, $arg
     // We must json encode the return_data https://www.slimframework.com/docs/v4/objects/response.html#returning-json
     $return_data = array();
     $bubble_data = $request->getParsedBody();
-    $payload = json_encode($bubble_data);
+    // print_r($bubble_data["entry"]."\n\n");
+    // print_r("\n\n");
+    $bubble_array = json_decode($bubble_data["entry"]);
+    // print_r($bubble_array);
+    // print_r("\n\n");
+    // print_r($bubble_array->radius."\n\n");
+    $bubble_array->radius = 101;    // just try anything visible
+    // $bubble_data["dogma"] = $bubble_data_event;
+    // $bubble_data["radius"] = 50;
+    // print_r($bubble_array->radius."\n"."\n");
+    // print_r($bubble_array);
+    // print_r("\n\n");
+    $payload = json_encode($bubble_array);
+    // print_r($payload."\n"."\n"); exit;
     $response->getBody()->write($payload);
     return $response
               ->withHeader('Content-Type', 'application/json');
