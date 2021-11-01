@@ -2,7 +2,7 @@
 
 ## Pop Pop Chaos
 
-Sentimintal Version: Pre Alpha Proof of Htaccess Concept
+Sentimental Version: Pre Alpha Proof of Htaccess Concept with locally inflating bubbles
 
 Okay basically I tried to pop Slimframework onto this and get:
 
@@ -15,7 +15,6 @@ The idea is to have Slim Framework handle api calls and return data for my D3
 
 Next steps?:
 
-* Inflate bubble when clicked
 * Get D3 to hit api/v1/click_bubble via click_bubble if a bubble is clicked
 * Have Slim return +1 to inflate the bubble
 
@@ -26,4 +25,4 @@ Next steps?:
 ** Have D3 send bubble create GET requests, perhaps ONE TIME ONLY when setting up the initial game bubbles
 ** Parse bubble creation from D3
 
-Mouseover to repel nodes. Adapted from my [talk on force layouts](http://vimeo.com/29458354). Compare to the [canvas version](/mbostock/3231307).
+Mouseover to repel nodes. Adapted from mbostock's [talk on force layouts](http://vimeo.com/29458354). Compare to the [canvas version](/mbostock/3231307).
