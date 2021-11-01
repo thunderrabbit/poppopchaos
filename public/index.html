@@ -97,7 +97,8 @@ const ellipseUpdate = function(update) {
   return update    // https://www.createwithdata.com/enter-exit-with-d3-join/
   .each(function(d,i) {
     // todo update actual data
-    d.radius = d.radius + Math.random() * 50;
+    d.rx = d.rx + Math.random() * 50;
+    d.ry = d.ry + Math.random() * 50;
   })
 }
 
@@ -105,7 +106,8 @@ const ellipseExit = function(exit) {
   return exit    // https://www.createwithdata.com/enter-exit-with-d3-join/
     .transition()
     .duration(300)
-    .attr('r',1000)
+    .attr('rx',1000)
+    .attr('ry',1000)
     .style('opacity', 0)
     .on('end', function() {
       d3.select(this).remove();
@@ -123,8 +125,11 @@ svg
     .join(ellipseEnter,ellipseUpdate,ellipseExit)    // https://www.createwithdata.com/enter-exit-with-d3-join/
     .transition() ///  this transition is basically for ellipseUpdate changes
     .duration(8490)
-    .attr('r', function(d) {
-      return d.radius;
+    .attr('rx', function(d) {
+      return d.rx;
+    })
+    .attr('ry', function(d) {
+      return d.ry;
     })
 }
 
