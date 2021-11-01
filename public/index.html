@@ -49,11 +49,13 @@ const svg = d3.select("body").append("svg")
 const mouseClickedCircle = function(click_info,bubble_object) {
   console.log("circle_id");
   console.log(bubble_object.bubble_id);
-  d3.json("/api/v1/click_bubble",{
+  var bubble_click_promise = d3.json("/api/v1/click_bubble",{
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: "entry=" + JSON.stringify(bubble_object)
+      body: "entry=" + bubble_object
   });
+  console.log("you got this dog");
+  console.log(bubble_click_promise);
   // figure out what circle was clicked and inflate it locally
   const searchIndex = data.findIndex((bubble) => bubble.bubble_id==bubble_object.bubble_id);
   data[searchIndex].radius = inflate(bubble_object);
