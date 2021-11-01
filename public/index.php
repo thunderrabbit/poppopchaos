@@ -18,6 +18,7 @@ $app->get('/', function (Request $request, Response $response, $args) {
 $app->get('/click_bubble', function (Request $request, Response $response, $args) {
     $version = $args['version'];
     $response->getBody()->write("Bubble Clicked! version " . $version);
+    $response->getBody()->write("<p>Use POST with bubble attached.");
     return $response;
 });
 
