@@ -14,6 +14,8 @@ function newBubbleObject(d, i) {
     "bubble_id": i * 7 + 13, //  Simulate some random ids from DB
     "cx": Math.random()*width,
     "cy": Math.random()*height,
+    "rx": Math.random()*150,
+    "ry": Math.random()*150,
     "radius" : (screen.width / 120),
     "fill": d3.scaleOrdinal(d3.schemeTableau10),
     "category": i % 3,
@@ -36,20 +38,20 @@ const svg = d3.select("body").append("svg")
         .attr("height", height);
 
 const mouseClickedCircle = function(click_info,bubble_object) {
-  console.log("circle_id");
+  console.log("ellipse_id");
   console.log(bubble_object.bubble_id);
   // call bubble_click API with bubble_id
   // on response, update radius of bubble
   // updateAll()
 }
 const mouseClickedBackground = function(click_info) {
-  console.log("not circle");
+  console.log("not ellipse");
   console.log(click_info);
   updateAll();
 /*
-  svg.append("circle")
+  svg.append("ellipse")
     .datum({id: 66})   // trying to add to nodes.. via https://octoperf.com/blog/2018/04/17/d3-js-mouse-events-and-transitions-tutorial/#how-to-bind-data-using-d3datum
-  .attr("id", d => 66)   // not working.  I want / need id to identify individual circles
+  .attr("id", d => 66)   // not working.  I want / need id to identify individual ellipses
     .attr("cx", d => click_info.clientX)
     .attr("cy", d => click_info.clientY)
     .attr("r", d => screen.width / 100)
@@ -60,8 +62,8 @@ const mouseClickedBackground = function(click_info) {
 }
 const mouseClickedSVG = function(click_info) {
   console.log(click_info);
-  if(click_info.target.matches("circle")) {
-    console.log("ignoring click info because circles catch their own clicks");
+  if(click_info.target.matches("ellipse")) {
+    console.log("ignoring click info because ellipses catch their own clicks");
 //    return mouseClickedCircle(click_info);   // not sure why I am returning this but kinda think that is how JS likes to be
   }
   if(click_info.target.matches("svg")) {
@@ -70,26 +72,28 @@ const mouseClickedSVG = function(click_info) {
   // because of the returns we don't get down here
 }
 
-const circleEnter = function(enter) {
+const ellipseEnter = function(enter) {
   console.log("entering");
   return enter    // https://www.createwithdata.com/enter-exit-with-d3-join/
-  .append("circle")
+  .append("ellipse")
   .attr("cx", d => d.cx)
   .attr("cy", d => d.cy)
+  .attr("rx", d => d.rx)
+  .attr("ry", d => d.ry)
   .attr("fill", d => d.fill)
   .attr("r", d => d.radius)    // will be inflated in 3000 milliseconds down below
   .on("mouseover",function(){
     d3.select(this).attr("r", d => Math.random() * screen.width / 20 + 20)
   })
   .on("click",mouseClickedCircle)
-  // These cause a merge error in the .data(nodes).join(circleEnter,circleUpdate,circleExit)
+  // These cause a merge error in the .data(nodes).join(ellipseEnter,ellipseUpdate,ellipseExit)
   // .transition()
   // .duration(3000)  // milliseconds
   // .attr('r', d => screen.width / 100)
   // .style('opacity', 1)
 }
 
-const circleUpdate = function(update) {
+const ellipseUpdate = function(update) {
   return update    // https://www.createwithdata.com/enter-exit-with-d3-join/
   .each(function(d,i) {
     // todo update actual data
@@ -97,7 +101,7 @@ const circleUpdate = function(update) {
   })
 }
 
-const circleExit = function(exit) {
+const ellipseExit = function(exit) {
   return exit    // https://www.createwithdata.com/enter-exit-with-d3-join/
     .transition()
     .duration(300)
@@ -112,12 +116,12 @@ function updateAll() {
   let nodes = getData();
   console.log(nodes);
 svg
-    .selectAll("circle")
+    .selectAll("ellipse")
     .data(nodes, function(d) {   // this keyFunction ensures bubbles stay consistent
       return d.bubble_id;    // id should come from MySQL DB bubbles.bubble_id
     })
-    .join(circleEnter,circleUpdate,circleExit)    // https://www.createwithdata.com/enter-exit-with-d3-join/
-    .transition() ///  this transition is basically for circleUpdate changes
+    .join(ellipseEnter,ellipseUpdate,ellipseExit)    // https://www.createwithdata.com/enter-exit-with-d3-join/
+    .transition() ///  this transition is basically for ellipseUpdate changes
     .duration(8490)
     .attr('r', function(d) {
       return d.radius;
