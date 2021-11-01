@@ -9,7 +9,7 @@
 const width = screen.width,
       height = screen.height;
 
-///  this declaration just allows data to be accessed getData()
+///  this declaration just allows data to be accessed in getData()
 let data;
 
 function newBubbleObject(d, i) {
@@ -27,9 +27,10 @@ function newBubbleObject(d, i) {
 // locally set bubbles new radius.
 // will be overridden if the server says a different number
 function inflate(bubble_object) {
-  console.log("INFLATING");
+  console.log("INFLATING locally  (optimally will match server inflation rate)");
   console.log(bubble_object);
-  return bubble_object.radius + Math.min(bubble_object.radius / 100, 0.7);
+  // plus 5 on the next line is a proof of hack which needs to be mitigated by the server checking the Database for bubble ID radius.
+  return bubble_object.radius + 5 + Math.min(bubble_object.radius / 100, 0.7);
 }
 
 function getData() {
@@ -46,18 +47,27 @@ const svg = d3.select("body").append("svg")
         .attr("width", width)
         .attr("height", height);
 
+const server_inflate = function(bubble_object) {
+  console.log("THEN");
+  console.log(bubble_object);
+  const searchIndex = data.findIndex(bubble => bubble.bubble_id==bubble_object.bubble_id);
+  data[searchIndex].radius = bubble_object.radius;
+  updateAll(data)   // this is SERVER response, which happens once server replies
+}
+
 const mouseClickedCircle = function(click_info,bubble_object) {
   console.log("circle_id");
   console.log(bubble_object.bubble_id);
   var bubble_click_promise = d3.json("/api/v1/click_bubble",{
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: "entry=" + bubble_object
+      body: "entry=" + JSON.stringify(bubble_object)
   });
+  bubble_click_promise.then(server_inflate).catch(err => { console.log(err) });
   console.log("you got this dog");
   console.log(bubble_click_promise);
   // figure out what circle was clicked and inflate it locally
-  const searchIndex = data.findIndex((bubble) => bubble.bubble_id==bubble_object.bubble_id);
+  const searchIndex = data.findIndex(bubble => bubble.bubble_id==bubble_object.bubble_id);
   data[searchIndex].radius = inflate(bubble_object);
   // call bubble_click API with bubble_id
   // on response, update radius of bubble
