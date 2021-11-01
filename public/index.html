@@ -9,6 +9,9 @@
 const width = screen.width,
       height = screen.height;
 
+///  this declaration just allows data to be accessed getData()
+let data;
+
 function newBubbleObject(d, i) {
   return {
     "bubble_id": i * 7 + 13, //  Simulate some random ids from DB
@@ -21,11 +24,19 @@ function newBubbleObject(d, i) {
   }
 }
 
+// locally set bubbles new radius.
+// will be overridden if the server says a different number
+function inflate(bubble_object) {
+  console.log("INFLATING");
+  console.log(bubble_object);
+  return bubble_object.radius + Math.min(bubble_object.radius / 100, 0.7);
+}
+
 function getData() {
   let numItems = Math.ceil(Math.random() * 50);
 
   // https://www.d3indepth.com/force-layout/
-  let data = d3
+  data = d3     // randomly alter our global variable.  Should be altered via GET request
       .range(numItems)
       .map(newBubbleObject)
   return data;
@@ -38,9 +49,12 @@ const svg = d3.select("body").append("svg")
 const mouseClickedCircle = function(click_info,bubble_object) {
   console.log("circle_id");
   console.log(bubble_object.bubble_id);
+  // figure out what circle was clicked and inflate it locally
+  const searchIndex = data.findIndex((bubble) => bubble.bubble_id==bubble_object.bubble_id);
+  data[searchIndex].radius = inflate(bubble_object);
   // call bubble_click API with bubble_id
   // on response, update radius of bubble
-  // updateAll()
+  updateAll(data)   // this is a local update which should be reverted if server disagrees
 }
 const mouseClickedBackground = function(click_info) {
   console.log("not circle");
@@ -78,9 +92,9 @@ const circleEnter = function(enter) {
   .attr("cy", d => d.cy)
   .attr("fill", d => d.fill)
   .attr("r", d => d.radius)    // will be inflated in 3000 milliseconds down below
-  .on("mouseover",function(){
-    d3.select(this).attr("r", d => Math.random() * screen.width / 20 + 20)
-  })
+  // .on("mouseover",function(){   // stop fucking with stuff while we almost have clicks working
+  //   d3.select(this).attr("r", d => Math.random() * screen.width / 20 + 20)
+  // })
   .on("click",mouseClickedCircle)
   // These cause a merge error in the .data(nodes).join(circleEnter,circleUpdate,circleExit)
   // .transition()
@@ -91,10 +105,10 @@ const circleEnter = function(enter) {
 
 const circleUpdate = function(update) {
   return update    // https://www.createwithdata.com/enter-exit-with-d3-join/
-  .each(function(d,i) {
-    // todo update actual data
-    d.radius = d.radius + Math.random() * 50;
-  })
+  // .each(function(d,i) {   // stop fucking with stuff while we almost have clicks working
+  //   // todo update actual data
+  //   d.radius = d.radius + Math.random() * 50;
+  // })
 }
 
 const circleExit = function(exit) {
@@ -108,8 +122,14 @@ const circleExit = function(exit) {
     });
 }
 
-function updateAll() {
-  let nodes = getData();
+function updateAll(data) {
+  let nodes;
+
+  if(data === undefined) {  // only works because data is the parameter for this function https://masteringjs.io/tutorials/fundamentals/undefined-check
+    nodes = getData();      // eventually get data from server
+  } else {
+    nodes = data;             // update per our local best guess
+  }
   console.log(nodes);
 svg
     .selectAll("circle")
@@ -118,7 +138,7 @@ svg
     })
     .join(circleEnter,circleUpdate,circleExit)    // https://www.createwithdata.com/enter-exit-with-d3-join/
     .transition() ///  this transition is basically for circleUpdate changes
-    .duration(8490)
+    .duration(100)
     .attr('r', function(d) {
       return d.radius;
     })
