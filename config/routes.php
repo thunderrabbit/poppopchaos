@@ -6,14 +6,5 @@ use Psr\Http\Message\ServerRequestInterface;
 use Slim\App;
 
 return function (App $app) {
-    $app->get('/', function (
-        ServerRequestInterface $request,
-        ResponseInterface $response,
-        $args
-    ) {
-        $version = $args['version'];
-        $response->getBody()->write("Hello world! version " . $version);
-
-        return $response;
-    });
+    $app->get('/', \App\Action\HelloAction::class)->setName('hello');
 };
