@@ -1,4 +1,8 @@
 <?php
+THIS WAS public/index.php but I plan to not use it except as a reference
+I plan instead to follow https://odan.github.io/2019/11/05/slim4-tutorial.html
+and split the code below into a more modern directory structure
+
 require __DIR__ . '/../vendor/autoload.php';
 
 use Psr\Http\Message\ResponseInterface as Response;
