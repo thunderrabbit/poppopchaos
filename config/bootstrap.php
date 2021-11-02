@@ -17,6 +17,8 @@ $container = $containerBuilder->build();
 // Create App instance
 $app = $container->get(App::class);
 
+$app->setBasePath("/api/{version}"); // only respond to versioned /api requests https://www.slimframework.com/docs/v4/start/web-servers.html
+
 // Register routes
 (require __DIR__ . '/routes.php')($app);
 
