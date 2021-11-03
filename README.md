@@ -15,8 +15,6 @@ The idea is to have Slim Framework handle api calls and return data for my D3
 
 Next steps?:
 
-* Restructure Slim to look more like [Slim Skeleton](https://github.com/slimphp/Slim-Skeleton) using https://odan.github.io/2019/11/05/slim4-tutorial.html (don't just use Slim Skeleton, so I have more hands-on tinkering, and because I am using Slim only in my api/ directory)
-
 * Have Slim access database
 ** Try this to connect my app to a DB
 ** Not going to `composer require monolog/monolog` because my web host does logging
