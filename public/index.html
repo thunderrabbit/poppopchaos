@@ -58,20 +58,21 @@ const server_inflate = function(bubble_object) {
 const mouseClickedCircle = function(click_info,bubble_object) {
   console.log("circle_id");
   console.log(bubble_object.bubble_id);
+  // figure out what circle was clicked and inflate it locally
+  const searchIndex = data.findIndex(bubble => bubble.bubble_id==bubble_object.bubble_id);
+  data[searchIndex].radius = inflate(bubble_object);
+  updateAll(data)   // this is a local update which should be reverted if server disagrees
+
+  // call bubble_click API with bubble_id
   var bubble_click_promise = d3.json("/api/v1/click_bubble",{
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: "entry=" + JSON.stringify(bubble_object)
   });
+  // on response, update radius of bubble
   bubble_click_promise.then(server_inflate).catch(err => { console.log(err) });
   console.log("you got this dog");
   console.log(bubble_click_promise);
-  // figure out what circle was clicked and inflate it locally
-  const searchIndex = data.findIndex(bubble => bubble.bubble_id==bubble_object.bubble_id);
-  data[searchIndex].radius = inflate(bubble_object);
-  // call bubble_click API with bubble_id
-  // on response, update radius of bubble
-  updateAll(data)   // this is a local update which should be reverted if server disagrees
 }
 const mouseClickedBackground = function(click_info) {
   console.log("not circle");
