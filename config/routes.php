@@ -7,5 +7,7 @@ use Slim\App;
 
 return function (App $app) {
     $app->get('/', \App\Action\HelloAction::class)->setName('hello');
+    $app->post('/users', \App\Action\UserCreateAction::class);
+    $app->post('/bubbles', \App\Action\BubbleCreateAction::class);
     $app->post('/click_bubble', \App\Action\ClickBubbleAction::class)->setName('Click Bubble');
 };
