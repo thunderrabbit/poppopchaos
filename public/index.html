@@ -15,10 +15,10 @@ let data;
 function newBubbleObject(d, i) {
   return {
     "bubble_id": i * 7 + 13, //  Simulate some random ids from DB
-    "cx": Math.random()*width,
+    "cx": Math.random()*width,             // spread bubbles across screen
     "cy": Math.random()*height,
-    "radius" : (screen.width / 120),
-    "fill": d3.scaleOrdinal(d3.schemeTableau10),
+    "radius" : (screen.width / 120),              // based on screen width to hopefully make it work on mobile
+    "fill": d3.scaleOrdinal(d3.schemeTableau10),  // color not working
     "category": i % 3,
     "tx": "texas",   // this proves we got data from this getData function
   }
