@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Action;
+namespace App\Action\Bubbles;
 
-use App\Domain\Bubble\Service\BubbleCreator;
+use App\Domain\Bubble\Service\BubblesGetter;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
-final class BubbleCreateAction
+final class GetBubblesAction
 {
-    private $bubbleCreator;
+    private $bubblesGetter;
 
-    public function __construct(BubbleCreator $bubbleCreator)
+    public function __construct(BubblesGetter $bubblesGetter)
     {
-        $this->bubbleCreator = $bubbleCreator;
+        $this->bubblesGetter = $bubblesGetter;
     }
 
     public function __invoke(
@@ -23,7 +23,7 @@ final class BubbleCreateAction
         $data = (array)$request->getParsedBody();
 
         // Invoke the Domain with inputs and retain the result
-        $bubbleId = $this->bubbleCreator->createBubble($data);
+        $bubbleId = $this->bubblesGetter->getBubbles($data);
 
         // Transform the result into the JSON representation
         $result = [

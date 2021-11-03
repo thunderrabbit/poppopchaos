@@ -64,8 +64,12 @@ final class BubblesGetterRepository
     {
         $sql = "SELECT * FROM bubbles";
 
-        $this->connection->prepare($sql);    // untested; I have just guessed what it should be
+        $stmnt = $this->connection->query($sql);
 
-        return (array)$this->connection->exesquizzle();  // just guessing here
+        $bubbles = array();
+        while($row = $stmnt->fetch()) {
+          $bubbles[] = $row;
+        }
+        return $bubbles;
     }
 }

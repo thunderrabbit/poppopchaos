@@ -40,7 +40,7 @@ final class BubblesGetter
         $array_of_bubbles = $this->repository->getBubbles();
 
         // Logging here: Bubble created successfully
-        $this->logger->info(sprintf('Bubbles gotten: %s', $array_of_bubbles));  // might break because %s vs array
+        // UNDEFINED: $this->logger->info(sprintf('Bubbles gotten: %s', $array_of_bubbles));  // might break because %s vs array
 
         return $array_of_bubbles;
     }
