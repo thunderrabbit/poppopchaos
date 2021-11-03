@@ -33,19 +33,34 @@ function inflate(bubble_object) {
   return bubble_object.radius + 5 + Math.min(bubble_object.radius / 100, 0.7);
 }
 
+// DATA WAS Asynchronous but now it is reading from DB
 function getData() {
+
+  var get_bubbles_promise = d3.json("/api/v1/get_bubbles/",{
+      method: "GET"
+  });
+  // on response, update radius of bubble
+  get_bubbles_promise.then(bubbles_received).catch(err => { console.log(err) });
+
+/* eventually hide this so get_bubbles_promise can set data */
   let numItems = Math.ceil(Math.random() * 50);
 
   // https://www.d3indepth.com/force-layout/
   data = d3     // randomly alter our global variable.  Should be altered via GET request
       .range(numItems)
       .map(newBubbleObject)
+/* eventually hide this so get_bubbles_promise can set data  */
   return data;
 }
 
 const svg = d3.select("body").append("svg")
         .attr("width", width)
         .attr("height", height);
+
+const bubbles_received = function(bubbles_json) {
+    console.log("We got these bubbles from server");
+    console.log(bubbles_json);
+}
 
 const server_inflate = function(bubble_object) {
   console.log("THEN");
