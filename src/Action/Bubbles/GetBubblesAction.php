@@ -19,16 +19,9 @@ final class GetBubblesAction
         ServerRequestInterface $request,
         ResponseInterface $response
     ): ResponseInterface {
-        // Collect input from the HTTP request
-        $data = (array)$request->getParsedBody();
 
         // Invoke the Domain with inputs and retain the result
-        $bubbleId = $this->bubblesGetter->getBubbles($data);
-
-        // Transform the result into the JSON representation
-        $result = [
-            'bubble_id' => $bubbleId
-        ];
+        $result = $this->bubblesGetter->getBubbles();
 
         // Build the HTTP response
         $response->getBody()->write((string)json_encode($result));
