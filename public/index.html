@@ -36,7 +36,7 @@ function inflate(bubble_object) {
 // DATA WAS Asynchronous but now it is reading from DB
 function getData() {
   const mycircles = d3.csv("/api/v1/get_bubbles/");
-  mycircles.then(updateAll);
+  mycircles.then(updateAll).catch(console.log.bind(console));  // h/t console bit https://pouchdb.com/2015/05/18/we-have-a-problem-with-promises.html
 }
 
 const svg = d3.select("body").append("svg")
@@ -71,7 +71,7 @@ const mouseClickedCircle = function(click_info,bubble_object) {
       body: "entry=" + JSON.stringify(bubble_object)
   });
   // on response, update radius of bubble
-  bubble_click_promise.then(server_inflate).catch(err => { console.log(err) });
+  bubble_click_promise.then(server_inflate).catch(console.log.bind(console));  // h/t console bit https://pouchdb.com/2015/05/18/we-have-a-problem-with-promises.html
   console.log("you got this dog");
   console.log(bubble_click_promise);
 }
