@@ -35,22 +35,8 @@ function inflate(bubble_object) {
 
 // DATA WAS Asynchronous but now it is reading from DB
 function getData() {
-
-  var get_bubbles_promise = d3.json("/api/v1/get_bubbles/",{
-      method: "GET"
-  });
-  // on response, update radius of bubble
-  get_bubbles_promise.then(bubbles_received).catch(err => { console.log(err) });
-
-/* eventually hide this so get_bubbles_promise can set data */
-  let numItems = Math.ceil(Math.random() * 50);
-
-  // https://www.d3indepth.com/force-layout/
-  data = d3     // randomly alter our global variable.  Should be altered via GET request
-      .range(numItems)
-      .map(newBubbleObject)
-/* eventually hide this so get_bubbles_promise can set data  */
-  return data;
+  const mycircles = d3.csv("/api/v1/get_bubbles/");
+  mycircles.then(updateAll);
 }
 
 const svg = d3.select("body").append("svg")
@@ -92,7 +78,7 @@ const mouseClickedCircle = function(click_info,bubble_object) {
 const mouseClickedBackground = function(click_info) {
   console.log("not circle");
   console.log(click_info);
-  updateAll();
+  getData();
 /*
   svg.append("circle")
     .datum({id: 66})   // trying to add to nodes.. via https://octoperf.com/blog/2018/04/17/d3-js-mouse-events-and-transitions-tutorial/#how-to-bind-data-using-d3datum
@@ -155,24 +141,24 @@ const circleExit = function(exit) {
     });
 }
 
-function updateAll(data) {
-  let nodes;
-
-  if(data === undefined) {  // only works because data is the parameter for this function https://masteringjs.io/tutorials/fundamentals/undefined-check
-    nodes = getData();      // eventually get data from server
-  } else {
-    nodes = data;             // update per our local best guess
-  }
+function updateAll(nodes) {
+  console.log("we got into updateAll");
   console.log(nodes);
-svg
+  console.log("we got those nodes in updateAll");
+
+  return svg
     .selectAll("circle")
     .data(nodes, function(d) {   // this keyFunction ensures bubbles stay consistent
+      console.log("bubble ID is");
+      console.log(d.bubble_id);
       return d.bubble_id;    // id should come from MySQL DB bubbles.bubble_id
     })
     .join(circleEnter,circleUpdate,circleExit)    // https://www.createwithdata.com/enter-exit-with-d3-join/
     .transition() ///  this transition is basically for circleUpdate changes
     .duration(100)
     .attr('r', function(d) {
+      console.log("just want to see if we are getting here");
+      console.log(d);
       return d.radius;
     })
 }
