@@ -2,7 +2,7 @@
 
 ## Pop Pop Chaos
 
-Sentimental Version: Proof of Concept with locally and server-inflating bubbles
+Sentimental Version: Can almost load bubbles from DB
 
 Okay basically I tried to pop Slimframework onto this and get:
 
@@ -15,8 +15,6 @@ The idea is to have Slim Framework handle api calls and return data for my D3
 
 Next steps?:
 
-* Clean up passwords and DB stuff in settings
-* Now that we can save settings.php again:
 * Add logging so we can see what is happening when there are no errors
 ** `composer require monolog/monolog`
 ** // potential Logger settings
