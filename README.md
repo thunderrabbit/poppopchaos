@@ -15,8 +15,8 @@ The idea is to have Slim Framework handle api calls and return data for my D3
 
 Next steps?:
 
-* Clean up passwords and DB stuff
-
+* Clean up passwords and DB stuff in settings
+* Now that we can save settings.php again:
 * Add logging so we can see what is happening when there are no errors
 ** `composer require monolog/monolog`
 ** // potential Logger settings
@@ -28,12 +28,12 @@ Next steps?:
         'file_permission' => 0775,
     ];
 
+* Figure out DB  https://www.php.net/manual/en/pdostatement.fetch.php
+* Have D3 send bubble create GET requests, perhaps ONE TIME ONLY when setting up the initial game bubbles
 
 * smurf some data per click
-
 * Create endpoints like api/v1/create (to create a bubble)
-** Have D3 send bubble create GET requests, perhaps ONE TIME ONLY when setting up the initial game bubbles
-** Parse bubble creation from D3
+* Parse bubble creation in D3 and then override from DB
 
 
 ### Directory structure
