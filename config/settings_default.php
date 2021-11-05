@@ -34,10 +34,13 @@ $settings['error'] = [
 // Database settings
 $settings['db'] = [
     'driver' => 'mysql',
-    'host' => 'CHANGE_THESE',
-    'username' => 'CHANGE_THESE',
-    'database' => 'CHANGE_THESE',
-    'password' => 'CHANGE_THESE',
+/*
+    Explain what's missing and where it can be found.  (not in repo)   See settings.php
+    'host' => 'OVERWRITE IN ../../poppopchaos.private_settings.php',
+    'database' => 'OVERWRITE IN ../../poppopchaos.private_settings.php',
+    'username' => 'OVERWRITE IN ../../poppopchaos.private_settings.php',
+    'password' => 'OVERWRITE IN ../../poppopchaos.private_settings.php',
+*/
     'charset' => 'utf8mb4',
     'collation' => 'utf8mb4_unicode_ci',
     'flags' => [
@@ -53,5 +56,6 @@ $settings['db'] = [
         PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci'
     ],
 ];
+
 
 return $settings;
