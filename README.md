@@ -16,15 +16,6 @@ The idea is to have Slim Framework handle api calls and return data for my D3
 Next steps?:
 
 * Add logging so we can see what is happening when there are no errors
-** `composer require monolog/monolog`
-** // potential Logger settings
-    $settings['logger'] = [
-        'name' => 'app',
-        'path' => $settings['root'] . '/logs',
-        'filename' => 'app.log',
-        'level' => \Monolog\Logger::DEBUG;    //  or \Monolog\Logger::INFO,
-        'file_permission' => 0775,
-    ];
 
 * Figure out DB  https://www.php.net/manual/en/pdostatement.fetch.php
 * Have D3 send bubble create GET requests, perhaps ONE TIME ONLY when setting up the initial game bubbles

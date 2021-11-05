@@ -31,6 +31,15 @@ $settings['error'] = [
     'log_error_details' => true,
 ];
 
+// Logger settings
+$settings['logger'] = [
+    'name' => 'app',
+    'path' => $settings['root'] . '/logs',
+    'filename' => 'app.log',
+    'level' => \Monolog\Logger::INFO,
+    'file_permission' => 0775,
+];
+
 // Database settings
 $settings['db'] = [
     'driver' => 'mysql',
