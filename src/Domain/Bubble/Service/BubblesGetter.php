@@ -3,6 +3,7 @@
 namespace App\Domain\Bubble\Service;
 
 use App\Domain\Bubble\Repository\BubblesGetterRepository;
+use App\Factory\LoggerFactory;
 
 /**
  * Service.
@@ -21,9 +22,15 @@ final class BubblesGetter
      *         We have declared the BubblesGetterRepository as a dependency,
      *         because the service can only interact with the database through the repository.
      */
-    public function __construct(BubblesGetterRepository $repository)
+    public function __construct(
+      BubblesGetterRepository $repository,
+      LoggerFactory $loggerFactory
+    )
     {
         $this->repository = $repository;
+        $this->logger = $loggerFactory
+            ->addFileHandler('bubble_creator.log')
+            ->createLogger();
     }
 
     /**
@@ -39,7 +46,7 @@ final class BubblesGetter
         $array_of_bubbles = $this->repository->getBubbles();
 
         // Logging here: Bubble created successfully
-        // UNDEFINED: $this->logger->info(sprintf('Bubbles gotten: %s', $array_of_bubbles));  // might break because %s vs array
+        $this->logger->info(json_encode($array_of_bubbles));
 
         return $array_of_bubbles;
     }
