@@ -1,6 +1,7 @@
 <?php
 // Thanks to https://odan.github.io/2019/11/05/slim4-tutorial.html
 
+use App\Factory\LoggerFactory;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Slim\App;
@@ -22,16 +23,26 @@ return [
         return $container->get(App::class)->getResponseFactory();
     },
 
+    // The logger factory
+    LoggerFactory::class => function (ContainerInterface $container) {
+        return new LoggerFactory($container->get('settings')['logger']);
+    },
+
     ErrorMiddleware::class => function (ContainerInterface $container) {
         $app = $container->get(App::class);
         $settings = $container->get('settings')['error'];
+
+        $logger = $container->get(LoggerFactory::class)
+            ->addFileHandler('error.log')
+            ->createLogger();
 
         return new ErrorMiddleware(
             $app->getCallableResolver(),
             $app->getResponseFactory(),
             (bool)$settings['display_error_details'],
             (bool)$settings['log_errors'],
-            (bool)$settings['log_error_details']
+            (bool)$settings['log_error_details'],
+            $logger
         );
     },
 
