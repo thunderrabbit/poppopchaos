@@ -1,6 +1,6 @@
 25 Oct 2021
 
-## Pop Pop Chaos
+## Pop Pop Chaos monolith
 
 Sentimental Version: Can almost load bubbles from DB
 
@@ -15,9 +15,31 @@ The idea is to have Slim Framework handle api calls and return data for my D3
 
 Next steps?:
 
-* Add logging so we can see what is happening when there are no errors
+* Split this repo into backend and frontend
 
-* Figure out DB  https://www.php.net/manual/en/pdostatement.fetch.php
+* BACKEND:
+** git clone git@github.com:thunderrabbit/Pop-Pop-Chaos-api.git
+** Add to it all the stuff I have done here for the api
+** Use ppcapi user to run it on ppcapi.robnugen.com
+** Point this repo to that site when running things
+** Make sure it all works as before
+*** e.g. https://bcn.robnugen.com/api/vr1/get_bubbles/ shows 3 bubbles of JSON data
+*** and the click bubble POST works as well
+
+* FRONTEND, after backend is working and we don't need any Slim code from here
+** Make an empty git repo Pop Pop Chaos Monolith on GH
+** Make a git remote for this repo and backup this to the new remote
+** Remove link to backup remote so we leave it intact
+** make a copy of index.html somewhere outside this repo
+** Look up how to remove file history from git repo
+** Remove all files but public/ directory
+** Remove public/index.php
+** If that is chaos, just go back to commit where we started Slim
+** cherry-pick commits that only refer to index.html
+** ???
+** Done!
+
+
 * Have D3 send bubble create GET requests, perhaps ONE TIME ONLY when setting up the initial game bubbles
 
 * smurf some data per click
