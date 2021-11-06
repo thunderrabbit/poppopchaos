@@ -7,9 +7,10 @@ Sentimental Version: Can almost load bubbles from DB
 Okay basically I tried to pop Slimframework onto this and get:
 
 bcn.robnugen.com/api/v1/     = Slim Framework Hello World
-bcn.robnugen.com/api/v1/click_bubble     = Slim Framework bubble clicked
+bcn.robnugen.com/api/v1/get_bubbles/     = Get 3 circles from DB in json format
 bcn.robnugen.com/index2.html  = https://bl.ocks.org/mbostock/3231298
 bcn.robnugen.com             = My attempt at Pop Pop Chaos if I visit
+bcn.robnugen.com/api/v1/click_bubble     = POST Slim Framework bubble clicked
 
 The idea is to have Slim Framework handle api calls and return data for my D3
 
@@ -19,6 +20,7 @@ Next steps?:
 
 * BACKEND:
 ** git clone git@github.com:thunderrabbit/Pop-Pop-Chaos-api.git
+** Point its .atoms to ssh ppcapi
 ** Add to it all the stuff I have done here for the api
 ** Use ppcapi user to run it on ppcapi.robnugen.com
 ** Point this repo to that site when running things
