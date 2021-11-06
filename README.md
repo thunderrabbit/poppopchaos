@@ -19,12 +19,12 @@ Next steps?:
 * Split this repo into backend and frontend
 
 * BACKEND:
-** Create ssh key on ppcapi.robnugen.com for github
-** Clone repo to github Pop-Pop-Chaos-api
-** Point its .atoms from lemur to ssh ppcapi
-** Use ppcapi user to run it on ppcapi.robnugen.com
-** Add route for HelloAction until https://ppcapi.robnugen.com/api/v1/ works
+** Figure out where I put private settings for this repo,
+    and how I kept it out of the repo on the server
+**  do the same for Pop-Pop-Chaos-api
+** set up link to DB until https://ppcapi.robnugen.com/api/v1/users does something good
 ** push code to Github and see if action says passing
+** Try to see if phpstan is working by removing its ignore-lines
 ** Add route for BubbleGetter until https://ppcapi.robnugen.com/api/v1/get_bubbles/ works
 ** push code to Github and see if action says passing
 ** Add other stuff I have done here for the api
