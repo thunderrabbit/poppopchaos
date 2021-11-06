@@ -19,10 +19,15 @@ Next steps?:
 * Split this repo into backend and frontend
 
 * BACKEND:
-** git clone git@github.com:thunderrabbit/Pop-Pop-Chaos-api.git
-** Point its .atoms to ssh ppcapi
-** Add to it all the stuff I have done here for the api
+** Create ssh key on ppcapi.robnugen.com for github
+** Clone repo to github Pop-Pop-Chaos-api
+** Point its .atoms from lemur to ssh ppcapi
 ** Use ppcapi user to run it on ppcapi.robnugen.com
+** Add route for HelloAction until https://ppcapi.robnugen.com/api/v1/ works
+** push code to Github and see if action says passing
+** Add route for BubbleGetter until https://ppcapi.robnugen.com/api/v1/get_bubbles/ works
+** push code to Github and see if action says passing
+** Add other stuff I have done here for the api
 ** Point this repo to that site when running things
 ** Make sure it all works as before
 *** e.g. https://bcn.robnugen.com/api/vr1/get_bubbles/ shows 3 bubbles of JSON data
