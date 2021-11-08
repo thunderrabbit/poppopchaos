@@ -49,7 +49,7 @@ function getDataLEFT() {
 
 // DATA WAS Asynchronous but now it is reading from DB
 function getDataRight() {
-  const mycircles = d3.csv("//ppcapi.robnugen.com/api/v1/get_bubbles/");
+  const mycircles = d3.json("//ppcapi.robnugen.com/api/v1/get_bubbles/");
   mycircles.then(updateAllRight).catch(console.log.bind(console));  // h/t console bit https://pouchdb.com/2015/05/18/we-have-a-problem-with-promises.html
 }
 
