@@ -35,7 +35,7 @@ function inflate(bubble_object) {
 
 // DATA WAS Asynchronous but now it is reading from DB
 function getData() {
-  const mycircles = d3.csv("/api/v1/get_bubbles/");
+  const mycircles = d3.csv("//ppcapi.robnugen.com/api/v1/get_bubbles/");
   mycircles.then(updateAll).catch(console.log.bind(console));  // h/t console bit https://pouchdb.com/2015/05/18/we-have-a-problem-with-promises.html
 }
 
@@ -65,7 +65,7 @@ const mouseClickedCircle = function(click_info,bubble_object) {
   updateAll(data)   // this is a local update which should be reverted if server disagrees
 
   // call bubble_click API with bubble_id
-  var bubble_click_promise = d3.json("/api/v1/click_bubble",{
+  var bubble_click_promise = d3.json("//ppcapi.robnugen.com/api/v1/click_bubble",{
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: "entry=" + JSON.stringify(bubble_object)
