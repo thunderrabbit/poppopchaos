@@ -20,15 +20,6 @@ Next steps?:
 
 * BACKEND:
 
-** Look at print_r in other repo ..  I printed settings when running phoenix on CLI
-  and they show 'localhost'    Figure out how to make it the correct db info  poppopchaos user and password etc
-
-
-
-
-
-** Fix DB until https://ppcapi.robnugen.com/api/v1/users does something good
-** push code to Github and see if action says passing
 ** Try to see if phpstan is working by removing its ignore-lines
 ** Add route for BubbleGetter until https://ppcapi.robnugen.com/api/v1/get_bubbles/ works
 ** push code to Github and see if action says passing
