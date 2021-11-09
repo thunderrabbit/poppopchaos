@@ -6,8 +6,8 @@
 
   // Adapted from Shan Carter's https://observablehq.com/@observablehq/simple-d3
 
-const width = screen.width / 2.2,       // just less than half (to fit two svg side by side)
-      height = screen.height / 2.2;     // just less than half
+const width = screen.width,  /// / 2.2,       // just less than half (to fit two svg side by side)
+      height = screen.height;  /// / 2.2;     // just less than half
 
 ///  this declaration just allows data to be accessed in getDataRight()
 let dataLEFT;
@@ -37,7 +37,7 @@ function inflate(bubble_object) {
 // DATA is from JS
 function getDataLEFT() {
 /* eventually hide this so get_bubbles_promise can set data */
-  let numItems = 5;
+  let numItems = Math.random() * 505;
 
   // https://www.d3indepth.com/force-layout/
   dataLEFT = d3     // randomly alter our global variable.  Should be altered via GET request
@@ -53,11 +53,11 @@ function getDataRight() {
   mycircles.then(updateAllRight).catch(console.log.bind(console));  // h/t console bit https://pouchdb.com/2015/05/18/we-have-a-problem-with-promises.html
 }
 
-const svgLEFT = d3.select("body").append("svg")
+const svgRIGHT = d3.select("body").append("svg")
         .attr("width", width)
         .attr("height", height);
 
-const svgRIGHT = d3.select("body").append("svg")
+const svgLEFT = d3.select("body").append("svg")
         .attr("width", width)
         .attr("height", height);
 
@@ -88,7 +88,7 @@ const mouseClickedCircleLEFT = function(click_info,bubble_object) {
   // figure out what circle was clicked and inflate it locally
   const searchIndex = dataLEFT.findIndex(bubble => bubble.bubble_id==bubble_object.bubble_id);
   dataLEFT[searchIndex].radius = inflate(bubble_object);
-  updateAll(dataLEFT)   // this is a local update which should be reverted if server disagrees
+  updateAllLEFT(dataLEFT)   // this is a local update which should be reverted if server disagrees
 
   // call bubble_click API with bubble_id
   var bubble_click_promise = d3.json("/api/v1/click_bubble",{
@@ -226,7 +226,9 @@ function updateAllLEFT(data) {
   } else {
     nodes = data;             // update per our local best guess
   }
+  console.log("we got into updateAll LEFT");
   console.log(nodes);
+  console.log("we got those nodes in updateAll LEFT");
 svgLEFT
     .selectAll("circle")
     .data(nodes, function(d) {   // this keyFunction ensures bubbles stay consistent
