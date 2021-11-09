@@ -103,12 +103,21 @@ const mouseClickedCircleLEFT = function(click_info,bubble_object) {
 }
 
 const mouseClickedCircleRIGHT = function(click_info,bubble_object) {
+/*
+dataRIGHT has no value here, probably because this function is a constant
+and is instantiated before dataRIGHT has a value
+
+This section is supposed to inflate the bubble locally
+so we do not have to wait for the server.
+
+I am taking it out in hopes I can get the server part to work,
+i.e. the code below this multi-line comment
   console.log("circle_id");
-  console.log(bubble_object.bubble_id);
+  console.log(bubble_object);
   // figure out what circle was clicked and inflate it locally
-  const searchIndex = dataRIGHT.findIndex(bubble => bubble.bubble_id==bubble_object.bubble_id);
-  dataRIGHT[searchIndex].radius = inflate(bubble_object);
+  bubble_object.radius = inflate(bubble_object);
   updateAllRight(dataRIGHT)   // this is a local update which should be reverted if server disagrees
+*/
 
   // call bubble_click API with bubble_id
   var bubble_click_promise = d3.json("//ppcapi.robnugen.com/api/v1/click_bubble",{
