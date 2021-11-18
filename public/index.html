@@ -98,7 +98,7 @@ const mouseClickedCircleLEFT = function(click_info,bubble_object) {
   });
   // on response, update radius of bubble
   bubble_click_promise.then(server_inflateLEFT).catch(err => { console.log(err) });
-  console.log("you got this LEFT dog");
+  console.log("clicked bubble on LEFT dog");
   console.log(bubble_click_promise);
 }
 
@@ -127,7 +127,7 @@ i.e. the code below this multi-line comment
   });
   // on response, update radius of bubble
   bubble_click_promise.then(server_inflateRIGHT).catch(console.log.bind(console));  // h/t console bit https://pouchdb.com/2015/05/18/we-have-a-problem-with-promises.html
-  console.log("you got this RIGHT dog");
+  console.log("clicked bubble on RIGHT dog");
   console.log(bubble_click_promise);
 }
 
@@ -238,7 +238,7 @@ function updateAllLEFT(data) {
   console.log("we got into updateAll LEFT");
   console.log(nodes);
   console.log("we got those nodes in updateAll LEFT");
-svgLEFT
+  svgLEFT
     .selectAll("circle")
     .data(nodes, function(d) {   // this keyFunction ensures bubbles stay consistent
       return d.bubble_id;    // id should come from MySQL DB bubbles.bubble_id
@@ -255,6 +255,7 @@ function updateAllRight(nodes) {
   console.log("we got into updateAllRight");
   console.log(nodes);
   console.log("we got those nodes in updateAllRight");
+
   dataRIGHT = nodes;    /// Slamming this in because it fixes bubble Click
 
   return svgRIGHT
