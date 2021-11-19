@@ -24,6 +24,9 @@ Next steps?:
 ** Make sure it all works as before
 *** e.g. https://bcn.robnugen.com/api/vr1/get_bubbles/ shows 3 bubbles of JSON data
 *** and the click bubble POST works as well
+**** realize I am not just updating bubbles like updating users, but am validating the update
+**** by looking at the DB first.  Need to figure out a way to do this or just trust the JS
+**** for now to get something build and then reinforce it later.
 
 * FRONTEND, after backend is working and we don't need any Slim code from here
 ** Make an empty git repo Pop Pop Chaos Monolith on GH
