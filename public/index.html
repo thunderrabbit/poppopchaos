@@ -261,16 +261,15 @@ function updateAllRight(nodes) {
   return svgRIGHT
     .selectAll("circle")
     .data(nodes, function(d) {   // this keyFunction ensures bubbles stay consistent
-      console.log("bubble ID is");
-      console.log(d.bubble_id);
+      console.log("bubble ID " + d.bubble_id + " is");
+      console.log(d);
       return d.bubble_id;    // id should come from MySQL DB bubbles.bubble_id
     })
     .join(circleEnterRIGHT,circleUpdate,circleExit)    // https://www.createwithdataRIGHT.com/enter-exit-with-d3-join/
     .transition() ///  this transition is basically for circleUpdate changes
     .duration(100)
     .attr('r', function(d) {
-      console.log("just want to see if we are getting here");
-      console.log(d);
+      console.log("update radius " + d.radius);
       return d.radius;
     })
 }
