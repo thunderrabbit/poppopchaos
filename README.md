@@ -20,18 +20,6 @@ Next steps?:
 
 * BACKEND:
 
-* Retool BubbleClicker:
-** clickBubble will receive a bubble_id and return an object of the bubble with new radius
-* Clean up ClickBubbleAction to a single line in the middle of these two lines:
-
-$bubble_object = json_decode($bubble_data["entry"]);
-$bubble_from_db = $this->bubbleClicker->clickBubble($bubble_object->bubble_id);
-$payload = json_encode($bubble_from_db);
-
-
-
-
-
 
 * FRONTEND, after backend is working and we don't need any Slim code from here
 ** Make an empty git repo Pop Pop Chaos Monolith on GH
