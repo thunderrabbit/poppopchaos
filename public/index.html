@@ -69,6 +69,8 @@ const bubbles_received = function(bubbles_json) {
 const server_inflateLEFT = function(bubble_object) {
   console.log("THEN");
   console.log(bubble_object);
+//  console.log("here is dataLEFT:   (we find the specific bubble shown above this line with findIndex because this is an (array?))");
+//  console.log(dataLEFT);
   const searchIndex = dataLEFT.findIndex(bubble => bubble.bubble_id==bubble_object.bubble_id);
   dataLEFT[searchIndex].radius = bubble_object.radius;
   updateAllLEFT(dataLEFT)   // this is SERVER response, which happens once server replies
@@ -77,6 +79,8 @@ const server_inflateLEFT = function(bubble_object) {
 const server_inflateRIGHT = function(bubble_object) {
   console.log("THEN");
   console.log(bubble_object);
+  // console.log("here is dataRIGHT:   (how do we find the specific bubble shown above this line?)");
+  // console.log(dataRIGHT);
   const searchIndex = dataRIGHT.findIndex(bubble => bubble.bubble_id==bubble_object.bubble_id);
   dataRIGHT[searchIndex].radius = bubble_object.radius;
   updateAllRight(dataRIGHT)   // this is SERVER response, which happens once server replies
