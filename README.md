@@ -9,6 +9,8 @@ bcn.robnugen.com             = My attempt at Pop Pop Chaos if I visit
 
 Next steps?:
 
+* Try to add colors like index2.html
+* Try to add force like index2.html
 * Have D3 send bubble create GET requests, perhaps ONE TIME ONLY when setting up the initial game bubbles
 
 * smurf some data per click
