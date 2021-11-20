@@ -9,21 +9,8 @@
 const width = screen.width,  /// / 2.2,       // just less than half (to fit two svg side by side)
       height = screen.height;  /// / 2.2;     // just less than half
 
-///  this declaration just allows data to be accessed in getDataRight()
-let dataLEFT;
-let dataRIGHT;
-
-function newBubbleObject(d, i) {
-  return {
-    "bubble_id": i * 7 + 13, //  Simulate some random ids from DB
-    "cx": Math.random()*width,             // spread bubbles across screen
-    "cy": Math.random()*height,
-    "radius" : (screen.width / 120),              // based on screen width to hopefully make it work on mobile
-    "fill": d3.scaleOrdinal(d3.schemeTableau10),  // color not working
-    "category": i % 3,
-    "tx": "texas",   // this proves we got dataRIGHT from this getDataRight function
-  }
-}
+///  this declaration just allows data to be accessed in getData()
+let data;
 
 // locally set bubbles new radius.
 // will be overridden if the server says a different number
@@ -34,30 +21,14 @@ function inflate(bubble_object) {
   return bubble_object.radius + 5 + Math.min(bubble_object.radius / 100, 0.7);
 }
 
-// DATA is from JS
-function getDataLEFT() {
-/* eventually hide this so get_bubbles_promise can set data */
-  let numItems = Math.random() * 505;
-
-  // https://www.d3indepth.com/force-layout/
-  dataLEFT = d3     // randomly alter our global variable.  Should be altered via GET request
-      .range(numItems)
-      .map(newBubbleObject)
-/* eventually hide this so get_bubbles_promise can set data  */
-  return dataLEFT;
-}
 
 // DATA WAS Asynchronous but now it is reading from DB
-function getDataRight() {
+function getData() {
   const promisetToGetBubbles = d3.json("//ppcapi.robnugen.com/api/v1/get_bubbles/");
-  promisetToGetBubbles.then(updateAllRight).catch(console.log.bind(console));  // h/t console bit https://pouchdb.com/2015/05/18/we-have-a-problem-with-promises.html
+  promisetToGetBubbles.then(updateAll).catch(console.log.bind(console));  // h/t console bit https://pouchdb.com/2015/05/18/we-have-a-problem-with-promises.html
 }
 
-const svgRIGHT = d3.select("body").append("svg")
-        .attr("width", width)
-        .attr("height", height);
-
-const svgLEFT = d3.select("body").append("svg")
+const svg = d3.select("body").append("svg")
         .attr("width", width)
         .attr("height", height);
 
@@ -66,50 +37,20 @@ const bubbles_received = function(bubbles_json) {
     console.log(bubbles_json);
 }
 
-const server_inflateLEFT = function(bubble_object) {
+const server_inflate = function(bubble_object) {
   console.log("THEN");
   console.log(bubble_object);
-//  console.log("here is dataLEFT:   (we find the specific bubble shown above this line with findIndex because this is an (array?))");
-//  console.log(dataLEFT);
-  const searchIndex = dataLEFT.findIndex(bubble => bubble.bubble_id==bubble_object.bubble_id);
-  dataLEFT[searchIndex].radius = bubble_object.radius;
-  updateAllLEFT(dataLEFT)   // this is SERVER response, which happens once server replies
+  // console.log("here is data:   (how do we find the specific bubble shown above this line?)");
+  // console.log(data);
+  const searchIndex = data.findIndex(bubble => bubble.bubble_id==bubble_object.bubble_id);
+  data[searchIndex].radius = bubble_object.radius;
+  updateAll(data)   // this is SERVER response, which happens once server replies
 }
 
-const server_inflateRIGHT = function(bubble_object) {
-  console.log("THEN");
-  console.log(bubble_object);
-  // console.log("here is dataRIGHT:   (how do we find the specific bubble shown above this line?)");
-  // console.log(dataRIGHT);
-  const searchIndex = dataRIGHT.findIndex(bubble => bubble.bubble_id==bubble_object.bubble_id);
-  dataRIGHT[searchIndex].radius = bubble_object.radius;
-  updateAllRight(dataRIGHT)   // this is SERVER response, which happens once server replies
-}
-
-const mouseClickedCircleLEFT = function(click_info,bubble_object) {
-  console.log("circle_id");
-  console.log(bubble_object.bubble_id);
-  // figure out what circle was clicked and inflate it locally
-  const searchIndex = dataLEFT.findIndex(bubble => bubble.bubble_id==bubble_object.bubble_id);
-  dataLEFT[searchIndex].radius = inflate(bubble_object);
-  updateAllLEFT(dataLEFT)   // this is a local update which should be reverted if server disagrees
-
-  // call bubble_click API with bubble_id
-  var bubble_click_promise = d3.json("/api/v1/click_bubble",{
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: "entry=" + JSON.stringify(bubble_object)
-  });
-  // on response, update radius of bubble
-  bubble_click_promise.then(server_inflateLEFT).catch(err => { console.log(err) });
-  console.log("clicked bubble on LEFT dog");
-  console.log(bubble_click_promise);
-}
-
-const mouseClickedCircleRIGHT = function(click_info,bubble_object) {
+const mouseClickedCircle = function(click_info,bubble_object) {
 /*
-dataRIGHT has no value here, probably because this function is a constant
-and is instantiated before dataRIGHT has a value
+data has no value here, probably because this function is a constant
+and is instantiated before data has a value
 
 This section is supposed to inflate the bubble locally
 so we do not have to wait for the server.
@@ -120,7 +61,7 @@ i.e. the code below this multi-line comment
   console.log(bubble_object);
   // figure out what circle was clicked and inflate it locally
   bubble_object.radius = inflate(bubble_object);
-  updateAllRight(dataRIGHT)   // this is a local update which should be reverted if server disagrees
+  updateAll(data)   // this is a local update which should be reverted if server disagrees
 */
 
   // call bubble_click API with bubble_id
@@ -130,69 +71,30 @@ i.e. the code below this multi-line comment
       body: "entry=" + JSON.stringify(bubble_object)
   });
   // on response, update radius of bubble
-  bubble_click_promise.then(server_inflateRIGHT).catch(console.log.bind(console));  // h/t console bit https://pouchdb.com/2015/05/18/we-have-a-problem-with-promises.html
-  console.log("clicked bubble on RIGHT dog");
+  bubble_click_promise.then(server_inflate).catch(console.log.bind(console));  // h/t console bit https://pouchdb.com/2015/05/18/we-have-a-problem-with-promises.html
+  console.log("clicked bubble on  dog");
   console.log(bubble_click_promise);
 }
 
-const mouseClickedBackgroundLeft = function(click_info) {
+const mouseClickedBackground = function(click_info) {
   console.log("not circle");
   console.log(click_info);
-  updateAllLEFT();
+  getData();
 }
 
-const mouseClickedBackgroundRight = function(click_info) {
-  console.log("not circle");
-  console.log(click_info);
-  getDataRight();
-/*
-  svgRIGHT.append("circle")
-    .datum({id: 66})   // trying to add to nodes.. via https://octoperf.com/blog/2018/04/17/d3-js-mouse-events-and-transitions-tutorial/#how-to-bind-data-using-d3datum
-  .attr("id", d => 66)   // not working.  I want / need id to identify individual circles
-    .attr("cx", d => click_info.clientX)
-    .attr("cy", d => click_info.clientY)
-    .attr("r", d => screen.width / 100)
-    .attr("fill", d3.scaleOrdinal(d3.schemeTableau10))
-    .on("click",mouseClickedCircleRIGHT);
-*/
-
-}
-
-const mouseClickedSVGLEFT = function(click_info) {
+const mouseClickedSVG = function(click_info) {
   console.log(click_info);
   if(click_info.target.matches("circle")) {
     console.log("ignoring click info because circles catch their own clicks");
 //    return mouseClickedCircle(click_info);   // not sure why I am returning this but kinda think that is how JS likes to be
   }
   if(click_info.target.matches("svg")) {
-    return mouseClickedBackgroundLeft(click_info); // not sure why I am returning this but kinda think that is how JS likes to be
-  }
-  // because of the returns we don't get down here
-}
-const mouseClickedSVGRight = function(click_info) {
-  console.log(click_info);
-  if(click_info.target.matches("circle")) {
-    console.log("ignoring click info because circles catch their own clicks");
-//    return mouseClickedCircleRIGHT(click_info);   // not sure why I am returning this but kinda think that is how JS likes to be
-  }
-  if(click_info.target.matches("svg")) {
-    return mouseClickedBackgroundRight(click_info); // not sure why I am returning this but kinda think that is how JS likes to be
+    return mouseClickedBackground(click_info); // not sure why I am returning this but kinda think that is how JS likes to be
   }
   // because of the returns we don't get down here
 }
 
-const circleEnterLEFT = function(enter) {
-  console.log("entering");
-  return enter    // https://www.createwithdata.com/enter-exit-with-d3-join/
-  .append("circle")
-  .attr("cx", d => d.cx)
-  .attr("cy", d => d.cy)
-  .attr("fill", d => d.fill)
-  .attr("r", d => d.radius)    // will be inflated in 3000 milliseconds down below
-  .on("click",mouseClickedCircleLEFT)
-}
-
-const circleEnterRIGHT = function(enter) {
+const circleEnter = function(enter) {
   console.log("entering");
   return enter    // https://www.createwithdata.com/enter-exit-with-d3-join/
   .append("circle")
@@ -203,8 +105,8 @@ const circleEnterRIGHT = function(enter) {
   // .on("mouseover",function(){   // stop fucking with stuff while we almost have clicks working
   //   d3.select(this).attr("r", d => Math.random() * screen.width / 20 + 20)
   // })
-  .on("click",mouseClickedCircleRIGHT)
-  // These cause a merge error in the .data(nodes).join(circleEnterRIGHT,circleUpdate,circleExit)
+  .on("click",mouseClickedCircle)
+  // These cause a merge error in the .data(nodes).join(circleEnter,circleUpdate,circleExit)
   // .transition()
   // .duration(3000)  // milliseconds
   // .attr('r', d => screen.width / 100)
@@ -231,45 +133,21 @@ const circleExit = function(exit) {
 }
 
 
-function updateAllLEFT(data) {
-  let nodes;
-
-  if(data === undefined) {  // only works because data is the parameter for this function https://masteringjs.io/tutorials/fundamentals/undefined-check
-    nodes = getDataLEFT();      // eventually get data from server
-  } else {
-    nodes = data;             // update per our local best guess
-  }
-  console.log("we got into updateAll LEFT");
+function updateAll(nodes) {
+  console.log("we got into updateAll");
   console.log(nodes);
-  console.log("we got those nodes in updateAll LEFT");
-  svgLEFT
-    .selectAll("circle")
-    .data(nodes, function(d) {   // this keyFunction ensures bubbles stay consistent
-      return d.bubble_id;    // id should come from MySQL DB bubbles.bubble_id
-    })
-    .join(circleEnterLEFT,circleUpdate,circleExit)    // https://www.createwithdata.com/enter-exit-with-d3-join/
-    .transition() ///  this transition is basically for circleUpdate changes
-    .duration(100)
-    .attr('r', function(d) {
-      return d.radius;
-    })
-}
+  console.log("we got those nodes in updateAll");
 
-function updateAllRight(nodes) {
-  console.log("we got into updateAllRight");
-  console.log(nodes);
-  console.log("we got those nodes in updateAllRight");
+  data = nodes;    /// Slamming this in because it fixes bubble Click
 
-  dataRIGHT = nodes;    /// Slamming this in because it fixes bubble Click
-
-  return svgRIGHT
+  return svg
     .selectAll("circle")
     .data(nodes, function(d) {   // this keyFunction ensures bubbles stay consistent
       console.log("bubble ID " + d.bubble_id + " is");
       console.log(d);
       return d.bubble_id;    // id should come from MySQL DB bubbles.bubble_id
     })
-    .join(circleEnterRIGHT,circleUpdate,circleExit)    // https://www.createwithdataRIGHT.com/enter-exit-with-d3-join/
+    .join(circleEnter,circleUpdate,circleExit)    // https://www.createwithdata.com/enter-exit-with-d3-join/
     .transition() ///  this transition is basically for circleUpdate changes
     .duration(100)
     .attr('r', function(d) {
@@ -278,8 +156,6 @@ function updateAllRight(nodes) {
     })
 }
 
-svgLEFT.on("click",mouseClickedSVGLEFT);
-
-svgRIGHT.on("click",mouseClickedSVGRight);
+svg.on("click",mouseClickedSVG);
 
 </script>
