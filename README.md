@@ -10,7 +10,7 @@ bcn.robnugen.com/api/v1/     = Slim Framework Hello World
 bcn.robnugen.com/api/v1/get_bubbles/     = Get 3 circles from DB in json format
 bcn.robnugen.com/index2.html  = https://bl.ocks.org/mbostock/3231298
 bcn.robnugen.com             = My attempt at Pop Pop Chaos if I visit
-bcn.robnugen.com/api/v1/click_bubble     = POST Slim Framework bubble clicked
+bcn.robnugen.com/api/v1/click_bubble     = DB is updated and radius returned
 
 The idea is to have Slim Framework handle api calls and return data for my D3
 
@@ -20,13 +20,18 @@ Next steps?:
 
 * BACKEND:
 
-** Add other stuff I have done here for the api
-** Make sure it all works as before
-*** e.g. https://bcn.robnugen.com/api/vr1/get_bubbles/ shows 3 bubbles of JSON data
-*** and the click bubble POST works as well
-**** realize I am not just updating bubbles like updating users, but am validating the update
-**** by looking at the DB first.  Need to figure out a way to do this or just trust the JS
-**** for now to get something build and then reinforce it later.
+* Retool BubbleClicker:
+** clickBubble will receive a bubble_id and return an object of the bubble with new radius
+* Clean up ClickBubbleAction to a single line in the middle of these two lines:
+
+$bubble_object = json_decode($bubble_data["entry"]);
+$bubble_from_db = $this->bubbleClicker->clickBubble($bubble_object->bubble_id);
+$payload = json_encode($bubble_from_db);
+
+
+
+
+
 
 * FRONTEND, after backend is working and we don't need any Slim code from here
 ** Make an empty git repo Pop Pop Chaos Monolith on GH
