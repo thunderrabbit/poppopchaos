@@ -12,11 +12,10 @@ const width = screen.width,  /// / 2.2,       // just less than half (to fit two
 ///  this declaration just allows data to be accessed in getData()
 let data;
 
-// from https://www.d3indepth.com/force-layout/
-var simulation = d3.forceSimulation(data)
-  .force('charge', d3.forceManyBody())
-  .force('center', d3.forceCenter(width / 2, height / 2));
-  // .on('tick', ticked);
+// from https://github.com/d3/d3-force/blob/main/README.md#force_initialize
+const simulation = d3.forceSimulation(data)
+    .force("charge", d3.forceManyBody())
+    .force("center", d3.forceCenter());
 
 function ticked() {
   var u = d3.select('svg')
