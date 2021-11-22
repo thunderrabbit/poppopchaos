@@ -48,7 +48,6 @@ const mouseClickedCircle = function(click_info,bubble_object) {
 const mouseClickedBackground = function(click_info) {
   console.log("not circle");
   console.log(click_info);
-  getData();
 }
 
 const mouseClickedSVG = function(click_info) {
@@ -114,5 +113,7 @@ function updateAll(nodes) {
 }
 
 svg.on("click",mouseClickedSVG);
+
+getData();
 
 </script>
