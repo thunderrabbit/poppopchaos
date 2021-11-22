@@ -46,16 +46,11 @@ const mouseClickedCircle = function(click_info,bubble_object) {
 }
 
 const mouseClickedBackground = function(click_info) {
-  console.log("not circle");
+  console.log("want to create circle");
   console.log(click_info);
 }
 
 const mouseClickedSVG = function(click_info) {
-  console.log(click_info);
-  if(click_info.target.matches("circle")) {
-    console.log("ignoring click info because circles catch their own clicks");
-//    return mouseClickedCircle(click_info);   // not sure why I am returning this but kinda think that is how JS likes to be
-  }
   if(click_info.target.matches("svg")) {
     return mouseClickedBackground(click_info); // not sure why I am returning this but kinda think that is how JS likes to be
   }
