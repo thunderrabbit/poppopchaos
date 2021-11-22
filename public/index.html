@@ -6,8 +6,8 @@
 
   // Adapted from Shan Carter's https://observablehq.com/@observablehq/simple-d3
 
-const width = screen.width,  /// / 2.2,       // just less than half (to fit two svg side by side)
-      height = screen.height;  /// / 2.2;     // just less than half
+const width = screen.width,
+      height = screen.height;
 
 ///  this declaration just allows data to be accessed in getData()
 let data;
@@ -21,11 +21,6 @@ function getData() {
 const svg = d3.select("body").append("svg")
         .attr("width", width)
         .attr("height", height);
-
-const bubbles_received = function(bubbles_json) {
-    console.log("We got these bubbles from server");
-    console.log(bubbles_json);
-}
 
 const server_inflate = function(bubble_object) {
   console.log("THEN");
@@ -76,23 +71,11 @@ const circleEnter = function(enter) {
   .attr("cy", d => d.cy)
   .attr("fill", d => d.fill)
   .attr("r", d => d.radius)    // will be inflated in 3000 milliseconds down below
-  // .on("mouseover",function(){   // stop fucking with stuff while we almost have clicks working
-  //   d3.select(this).attr("r", d => Math.random() * screen.width / 20 + 20)
-  // })
   .on("click",mouseClickedCircle)
-  // These cause a merge error in the .data(nodes).join(circleEnter,circleUpdate,circleExit)
-  // .transition()
-  // .duration(3000)  // milliseconds
-  // .attr('r', d => screen.width / 100)
-  // .style('opacity', 1)
 }
 
 const circleUpdate = function(update) {
   return update    // https://www.createwithdata.com/enter-exit-with-d3-join/
-  // .each(function(d,i) {   // stop fucking with stuff while we almost have clicks working
-  //   // todo update actual data
-  //   d.radius = d.radius + Math.random() * 50;
-  // })
 }
 
 const circleExit = function(exit) {
