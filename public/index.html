@@ -12,13 +12,6 @@ const width = screen.width,
 ///  this declaration just allows data to be accessed in getData() and updateAll()
 let data;
 
-// getData reads from DB via API
-function getData() {
-  const promisetToGetBubbles = d3.json("//ppcapi.robnugen.com/api/v1/get_bubbles/");
-  promisetToGetBubbles.then(updateAll).catch(console.log.bind(console));  // h/t console bit https://pouchdb.com/2015/05/18/we-have-a-problem-with-promises.html
-}
-
-
 const server_inflate = function(bubble_object) {
   console.log("THEN");
   console.log(bubble_object);
@@ -109,6 +102,12 @@ const svg = d3.select("body").append("svg")
         .attr("width", width)
         .attr("height", height)
         .on("click",mouseClickedSVG);
+
+// getData reads from DB via API
+const getData = function() {
+  const promisetToGetBubbles = d3.json("//ppcapi.robnugen.com/api/v1/get_bubbles/");
+  promisetToGetBubbles.then(updateAll).catch(console.log.bind(console));  // h/t console bit https://pouchdb.com/2015/05/18/we-have-a-problem-with-promises.html
+}
 
 getData();
 
