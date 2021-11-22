@@ -13,13 +13,10 @@ const width = screen.width,
 let data;
 
 const server_inflate = function(bubble_object) {
-  console.log("THEN");
-  console.log(bubble_object);
-  // console.log("here is data:   (how do we find the specific bubble shown above this line?)");
-  // console.log(data);
+  // find the specific bubble_object in array
   const searchIndex = data.findIndex(bubble => bubble.bubble_id==bubble_object.bubble_id);
   data[searchIndex].radius = bubble_object.radius;
-  updateAll(data)   // this is SERVER response, which happens once server replies
+  updateAll(data)   // this seems overkill to do all bubbles, but I don't know more subtle way to update the inflated bubble
 }
 
 const mouseClickedCircle = function(click_info,bubble_object) {
@@ -31,7 +28,7 @@ const mouseClickedCircle = function(click_info,bubble_object) {
   });
   // on response, update radius of bubble
   bubble_click_promise.then(server_inflate).catch(console.log.bind(console));  // h/t console bit https://pouchdb.com/2015/05/18/we-have-a-problem-with-promises.html
-  console.log("clicked bubble on  dog");
+  console.log("clicked bubble");
   console.log(bubble_click_promise);
 }
 
@@ -86,7 +83,7 @@ const updateAll = function(nodes) {
     .data(nodes, function(d) {   // this keyFunction ensures bubbles stay consistent
       console.log("bubble ID " + d.bubble_id + " is");
       console.log(d);
-      return d.bubble_id;    // id should come from MySQL DB bubbles.bubble_id
+      return d.bubble_id;    // id comes from MySQL DB bubbles.bubble_id
     })
     .join(circleEnter,circleUpdate,circleExit)    // https://www.createwithdata.com/enter-exit-with-d3-join/
     .transition() ///  this transition is basically for circleUpdate changes
