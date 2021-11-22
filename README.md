@@ -11,6 +11,8 @@ Next steps?:
 
 * Try to add colors like index2.html
 * Try to add force like index2.html
+* https://bost.ocks.org/mike/d3/workshop/#87   ???
+* https://bost.ocks.org/mike/d3/workshop/#94
 * Have D3 send bubble create GET requests, perhaps ONE TIME ONLY when setting up the initial game bubbles
 
 * smurf some data per click
