@@ -20,13 +20,25 @@ const circleEnter = function(enter) {
     .attr("r", d => d.radius)
 }
 
+const simulation = d3.forceSimulation()
+    .force('charge', d3.forceManyBody().strength(140))
+    .force('center', d3.forceCenter())
+    .force('collision', d3.forceCollide().radius(function(d) {
+      return d.radius
+    }));
+
 const updateAll = function(nodes) {
-  return svg
-    .selectAll("circle")
-    .data(nodes, function(d) {   // this keyFunction ensures bubbles stay consistent
-      return d.bubble_id;    // id comes from MySQL DB bubbles.bubble_id
-    })
-    .join(circleEnter)    // https://www.createwithdata.com/enter-exit-with-d3-join/
+    simulation
+      .nodes(nodes)
+      .on("tick", function(){
+        svg
+          .selectAll("circle")
+          .data(nodes, function(d) {   // this keyFunction ensures bubbles stay consistent
+            return d.bubble_id;    // id comes from MySQL DB bubbles.bubble_id
+          })
+          .join(circleEnter)    // https://www.createwithdata.com/enter-exit-with-d3-join/
+          .attr("transform", function (d) { return "translate(" + d.x + ", " + d.y + ")"; });
+      });
 }
 
 const svg = d3.select("body").append("svg")
