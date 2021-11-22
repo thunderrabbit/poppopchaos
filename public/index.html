@@ -12,18 +12,6 @@ const width = screen.width,  /// / 2.2,       // just less than half (to fit two
 ///  this declaration just allows data to be accessed in getData()
 let data;
 
-// from https://reactfordataviz.com/articles/force-directed-graphs-with-react-and-d3v7/
-const simulation = d3
-  .forceSimulation()
-  .force("x", d3.forceX(400))
-  .force("y", d3.forceY(300))
-  .force("charge", d3.forceManyBody().strength(3))
-  .force("collision", d3.forceCollide((node) => node.r))
-  .on("tick", () => {
-    setAnimatedNodes([...simulation.nodes()])
-  })
-
-
 // locally set bubbles new radius.
 // will be overridden if the server says a different number
 function inflate(bubble_object) {
