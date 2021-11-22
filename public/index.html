@@ -75,13 +75,6 @@ const circleEnter = function(enter) {
   .attr("cx", d => d.cx)
   .attr("cy", d => d.cy)
   .attr("fill", d => d.fill)
-/*
-var x = d3.scale.linear()
-    .domain([12, 24])
-    .range(["steelblue", "brown"]);
-
-x(16); // #666586
-*/
   .attr("r", d => d.radius)    // will be inflated in 3000 milliseconds down below
   // .on("mouseover",function(){   // stop fucking with stuff while we almost have clicks working
   //   d3.select(this).attr("r", d => Math.random() * screen.width / 20 + 20)
