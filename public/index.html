@@ -9,6 +9,7 @@
 const width = screen.width,
       height = screen.height;
 
+const SAMPLEJSON = '[{"bubble_id":"1","category":"1","cx":"1323","cy":"50","radius":"20","fill":"0","created_by_id":null},{"bubble_id":"2","category":"2","cx":"120","cy":"800","radius":"20","fill":"0","created_by_id":null},{"bubble_id":"3","category":"3","cx":"250","cy":"490","radius":"20","fill":"0","created_by_id":null},{"bubble_id":"10","category":"1","cx":"1323","cy":"150","radius":"22","fill":"0","created_by_id":null},{"bubble_id":"12","category":"1","cx":"1323","cy":"501","radius":"94","fill":"0","created_by_id":null},{"bubble_id":"13","category":"1","cx":"1323","cy":"50","radius":"22","fill":"0","created_by_id":null},{"bubble_id":"20","category":"2","cx":"120","cy":"600","radius":"23","fill":"0","created_by_id":null},{"bubble_id":"22","category":"2","cx":"120","cy":"800","radius":"20","fill":"0","created_by_id":null},{"bubble_id":"23","category":"2","cx":"120","cy":"1800","radius":"20","fill":"0","created_by_id":null},{"bubble_id":"30","category":"3","cx":"250","cy":"590","radius":"28","fill":"0","created_by_id":null},{"bubble_id":"32","category":"3","cx":"250","cy":"190","radius":"43","fill":"0","created_by_id":null},{"bubble_id":"33","category":"3","cx":"250","cy":"490","radius":"33","fill":"0","created_by_id":null}]';
 ///  this declaration just allows data to be accessed in getData() and updateAll()
 let data;
 
@@ -35,10 +36,11 @@ const svg = d3.select("body").append("svg")
         .attr("width", width)
         .attr("height", height);
 
-// getData reads from DB via API
+// getData simulates reading from DB via API
 const getData = function() {
-  const promisetToGetBubbles = d3.json("//ppcapi.robnugen.com/api/v1/get_bubbles/");
-  promisetToGetBubbles.then(updateAll).catch(console.log.bind(console));  // h/t console bit https://pouchdb.com/2015/05/18/we-have-a-problem-with-promises.html
+  // WAS:  const promisetToGetBubbles = d3.json("//ppcapi.robnugen.com/api/v1/get_bubbles/");
+  // WAS:  promisetToGetBubbles.then(updateAll).catch(console.log.bind(console));  // h/t console bit https://pouchdb.com/2015/05/18/we-have-a-problem-with-promises.html
+  updateAll(JSON.parse(SAMPLEJSON));
 }();   // immediately call this function to load circles on screen.  OR  getData();
 
 </script>
