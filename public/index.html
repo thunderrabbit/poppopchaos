@@ -17,7 +17,7 @@ const circleEnter = function(enter) {
     .attr("cx", d => d.cx)
     .attr("cy", d => d.cy)
     .attr("fill", d => d.fill)
-    .attr("r", d => d.radius)    // will be inflated in 3000 milliseconds down below
+    .attr("r", d => d.radius)
 }
 
 const updateAll = function(nodes) {
@@ -29,7 +29,6 @@ const updateAll = function(nodes) {
     .join(circleEnter)    // https://www.createwithdata.com/enter-exit-with-d3-join/
 }
 
-// must be declared below definiton of mouseClickedSVG
 const svg = d3.select("body").append("svg")
         .attr("width", width)
         .attr("height", height);
@@ -39,6 +38,6 @@ const getData = function() {
   // WAS:  const promisetToGetBubbles = d3.json("//ppcapi.robnugen.com/api/v1/get_bubbles/");
   // WAS:  promisetToGetBubbles.then(updateAll).catch(console.log.bind(console));  // h/t console bit https://pouchdb.com/2015/05/18/we-have-a-problem-with-promises.html
   updateAll(JSON.parse(SAMPLEJSON));
-}();   // immediately call this function to load circles on screen.  OR  getData();
+}();   // immediately call this function to load circles on screen.  same as  `getData();` on next line
 
 </script>
