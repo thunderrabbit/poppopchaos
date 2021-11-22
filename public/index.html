@@ -9,10 +9,10 @@
 const width = screen.width,
       height = screen.height;
 
-///  this declaration just allows data to be accessed in getData()
+///  this declaration just allows data to be accessed in getData() and updateAll()
 let data;
 
-// DATA WAS Asynchronous but now it is reading from DB
+// getData reads from DB via API
 function getData() {
   const promisetToGetBubbles = d3.json("//ppcapi.robnugen.com/api/v1/get_bubbles/");
   promisetToGetBubbles.then(updateAll).catch(console.log.bind(console));  // h/t console bit https://pouchdb.com/2015/05/18/we-have-a-problem-with-promises.html
